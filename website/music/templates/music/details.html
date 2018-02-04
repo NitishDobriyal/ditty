@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+{% extends 'music/main.html' %}
+<body>
+{% load static %}
+{% block title %}Album Details{% endblock %}
+{% block body %}
+    <img src = "{{ album.album_logo.url }}">
+
+    <h2>{{ album.album_title  }}</h2>
+    <h3>{{ album.artist  }}</h3>
+
+
+        {% for song in album.song_set.all %}
+            <label>
+               {{ song.song_title }}
+               {% if song.is_favorite %}
+                  <img src="http://i.imgur.com/b9b13Rd.png">
+               {% endif %}
+                 <form action="#" method="post" style="display: inline;">
+                     {% csrf_token %}
+                     <input type="hidden" name="song_id" value="{{ song.id }}" />
+                     <button type="submit" class="btn btn-danger btn-xs">
+                         <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                     </button>
+                 </form>
+            </label><br>
+        {% endfor %}
+{% endblock %}
+
+</body>
+
+</html>
